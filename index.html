@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Descomplica — Finanças para jovens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-900: #1c2740;
+    --navy-700: #2b3a5a;
+    --navy-500: #445580;
+    --green-500: #2ebd79;
+    --green-600: #22a066;
+    --green-100: #e3f7ec;
+    --bg: #f3f6f5;
+    --surface: #ffffff;
+    --ink: #182238;
+    --muted: #5c6579;
+    --line: #dfe4e6;
+    --radius-lg: 22px;
+    --radius-sm: 10px;
+    color-scheme: light;
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #12161f;
+      --surface: #1a2030;
+      --ink: #eef1f6;
+      --muted: #9aa3b8;
+      --line: #2b3345;
+      --navy-900: #eef1f6;
+      --navy-700: #c9d1e3;
+      --green-100: #12321f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12161f;
+    --surface: #1a2030;
+    --ink: #eef1f6;
+    --muted: #9aa3b8;
+    --line: #2b3345;
+    --navy-900: #eef1f6;
+    --navy-700: #c9d1e3;
+    --green-100: #12321f;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(84px + env(safe-area-inset-top, 0px));
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  h1, h2, h3 {
+    font-family: 'Sora', 'Inter', system-ui, sans-serif;
+    color: var(--navy-900);
+    margin: 0;
+    line-height: 1.12;
+  }
+
+  p { margin: 0; color: var(--muted); line-height: 1.55; }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- header ---------- */
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand svg { width: 34px; height: 34px; flex: none; }
+  .brand-type { display: flex; flex-direction: column; line-height: 1; }
+  .brand-type strong {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--navy-900);
+  }
+  .brand-type span {
+    font-size: 0.62rem;
+    font-weight: 600;
+    color: var(--green-600);
+    letter-spacing: 0.04em;
+  }
+
+  nav { display: flex; gap: 22px; }
+  nav a {
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--navy-700);
+    padding: 6px 2px;
+    border-bottom: 2px solid transparent;
+  }
+  nav a:hover { border-bottom-color: var(--green-500); }
+
+  /* ---------- hero ---------- */
+
+  .hero {
+    padding: 76px 0 64px;
+  }
+  .hero .wrap {
+    max-width: 640px;
+  }
+  .hero h1 {
+    font-size: clamp(2.3rem, 5.4vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: -0.015em;
+  }
+  .hero .underline {
+    display: inline-block;
+    position: relative;
+  }
+  .hero .underline::after {
+    content: "";
+    position: absolute;
+    left: 2px; right: 2px; bottom: 3px;
+    height: 0.32em;
+    background: var(--green-100);
+    z-index: -1;
+    border-radius: 3px;
+  }
+  .hero p {
+    margin-top: 18px;
+    font-size: 1.08rem;
+    max-width: 46ch;
+  }
+  .hero .tag-row {
+    margin-top: 28px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--navy-700);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 7px 13px;
+    border-radius: 100px;
+  }
+
+  /* ---------- generic section heading ---------- */
+
+  section { padding: 54px 0; border-top: 1px solid var(--line); }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  .section-head .mark-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--green-500);
+    flex: none;
+    transform: translateY(-2px);
+  }
+  .section-head h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 0.98rem;
+    margin: 8px 0 0 21px;
+    max-width: 52ch;
+  }
+
+  /* ---------- accordion (dicas) ---------- */
+
+  .accordion { border-top: 1px solid var(--line); }
+  .acc-item { border-bottom: 1px solid var(--line); }
+  .acc-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: 'Sora', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy-900);
+    padding: 20px 4px;
+    cursor: pointer;
+  }
+  .acc-trigger .num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--green-600);
+    width: 26px;
+    flex: none;
+  }
+  .acc-trigger .plus {
+    margin-left: auto;
+    width: 22px; height: 22px;
+    flex: none;
+    position: relative;
+  }
+  .acc-trigger .plus::before,
+  .acc-trigger .plus::after {
+    content: "";
+    position: absolute;
+    background: var(--navy-700);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .acc-trigger .plus::before { width: 14px; height: 2px; }
+  .acc-trigger .plus::after { width: 2px; height: 14px; }
+  .acc-item.open .acc-trigger .plus::after { transform: translate(-50%, -50%) rotate(90deg) scaleY(0); }
+  .acc-item.open .acc-trigger .plus::before { background: var(--green-600); }
+
+  .acc-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.32s ease;
+  }
+  .acc-item.open .acc-panel { grid-template-rows: 1fr; }
+  .acc-panel-inner { overflow: hidden; }
+  .acc-panel p {
+    padding: 0 4px 22px 42px;
+    max-width: 62ch;
+    font-size: 0.97rem;
+  }
+
+  /* ---------- e-book + vídeos, lado a lado ---------- */
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 48px;
+    align-items: start;
+  }
+  .content-col .section-head { margin-bottom: 22px; }
+
+  /* ---------- ebook: livro grande que abre no hover ---------- */
+
+  .book-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0 10px;
+  }
+
+  .book {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 330px;
+    perspective: 1800px;
+  }
+
+  /* miolo: duas páginas lado a lado, sempre presente por baixo da capa */
+  .book-pages {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 18px 38px rgba(20, 30, 50, 0.16);
+  }
+  .page {
+    flex: 1 1 50%;
+    min-width: 0;
+    padding: 24px 22px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .page-left { position: relative; border-right: 1px solid var(--line); }
+  .page-left::after {
+    content: "";
+    position: absolute;
+    top: 0; right: -10px; bottom: 0; width: 14px;
+    background: linear-gradient(to right, rgba(0,0,0,0.07), transparent);
+    pointer-events: none;
+  }
+  .page .modal-eyebrow { font-size: 0.74rem; font-weight: 600; color: var(--green-600); }
+  .page h3 { font-size: 1.18rem; margin-top: 5px; }
+  .page p.lead { margin-top: 12px; font-size: 0.9rem; }
+  .page .list-title { margin-top: 0; font-family: 'Sora', sans-serif; font-weight: 700; font-size: 0.86rem; color: var(--navy-900); }
+  .page ul { margin: 12px 0 0; padding-left: 18px; }
+  .page ul li { color: var(--muted); font-size: 0.86rem; margin-bottom: 8px; line-height: 1.48; }
+
+  .download-row { margin-top: 22px; }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-600);
+    color: #fff;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .download-btn:hover { background: var(--green-500); transform: translateY(-1px); }
+  .download-btn svg { width: 14px; height: 14px; }
+  .download-hint { display: block; margin-top: 8px; font-size: 0.7rem; color: var(--muted); }
+
+  /* capa: cobre o miolo até passar o mouse */
+  .book-cover {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    border-radius: 6px 14px 14px 6px;
+    background: linear-gradient(155deg, var(--navy-900), var(--navy-700) 55%, var(--green-600));
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: transform 0.6s cubic-bezier(.22,.8,.24,1);
+    box-shadow: -3px 0 0 rgba(0,0,0,0.18) inset, 10px 16px 30px rgba(20,30,50,0.24);
+    cursor: pointer;
+  }
+  .book:hover .book-cover,
+  .book:focus-within .book-cover,
+  .book.open .book-cover {
+    transform: rotateY(-100deg);
+  }
+  .book-cover::before {
+    /* borda das páginas, à direita da capa */
+    content: "";
+    position: absolute;
+    right: 0; top: 4px; bottom: 4px;
+    width: 6px;
+    background: repeating-linear-gradient(to bottom, #f4f1e8 0 2px, #e3ddc9 2px 3px);
+  }
+  .book-cover .cover-badge {
+    position: absolute;
+    top: 16px; right: 18px;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.4);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .book-cover .cover-badge svg { width: 14px; height: 14px; }
+  .book-cover .rings { position: absolute; right: -22px; bottom: -22px; width: 110px; height: 110px; opacity: 0.9; }
+  .book-cover .cover-text {
+    position: absolute;
+    top: 22px; left: 22px; right: 58px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    color: #fff;
+  }
+  .book-cover .cover-foot {
+    position: absolute;
+    left: 22px; bottom: 42px;
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.75);
+    font-weight: 600;
+  }
+  .book-cover .cover-cta {
+    position: absolute;
+    left: 22px; bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .book-cover .cover-cta svg { width: 13px; height: 13px; }
+
+  .book-hint { text-align: center; font-size: 0.82rem; color: var(--muted); margin-top: 12px; }
+
+  /* ---------- videos: grid de blocos ---------- */
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .vid-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .vid-block:hover {
+    transform: translateY(-3px);
+    border-color: var(--green-500);
+    box-shadow: 0 12px 24px rgba(20, 30, 50, 0.12);
+  }
+
+  .vid-thumb {
+    height: 84px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    flex: none;
+  }
+  .vid-thumb .play {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vid-thumb .play svg { width: 28px; height: 28px; opacity: 0.92; }
+  .vid-thumb .dur {
+    position: absolute; right: 6px; bottom: 6px;
+    background: rgba(15, 20, 30, 0.72);
+    color: #fff;
+    font-size: 0.64rem;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 5px;
+  }
+  .vid-meta h4 {
+    font-family: 'Sora', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--navy-900);
+    margin: 0;
+    line-height: 1.28;
+  }
+  .vid-meta span {
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: block;
+    margin-top: 3px;
+  }
+  .videos-note {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 14px;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 34px 0 calc(34px + env(safe-area-inset-bottom, 0px));
+  }
+  footer .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  footer .brand svg { width: 24px; height: 24px; }
+  footer .brand-type strong { font-size: 0.88rem; }
+  footer p { font-size: 0.8rem; }
+
+  @media (max-width: 800px) {
+    .content-grid { grid-template-columns: 1fr; gap: 46px; }
+    .content-col + .content-col { border-top: 1px solid var(--line); padding-top: 40px; }
+  }
+
+  @media (max-width: 420px) {
+    .video-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 620px) {
+    .header-row { padding: 12px 20px; }
+    nav { gap: 14px; }
+    nav a { font-size: 0.84rem; }
+    .wrap { padding: 0 20px; }
+    .hero { padding: 52px 0 44px; }
+    .book { height: 380px; }
+    .page { padding: 20px 18px; }
+    .book-cover .cover-text { font-size: 1.05rem; right: 52px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="38" cy="50" r="26" fill="none" stroke="var(--navy-900)" stroke-width="11"/>
+        <circle cx="62" cy="50" r="26" fill="none" stroke="var(--navy-900)" stroke-width="11"/>
+        <path d="M 62 76 C 76 76 84 68 86 58 L 100 58" fill="none" stroke="var(--green-500)" stroke-width="9" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-type">
+        <strong>Descomplica</strong>
+        <span>FINANÇAS PARA JOVENS</span>
+      </div>
+    </div>
+    <nav>
+      <a href="#dicas">Dicas</a>
+      <a href="#ebook">E-book</a>
+      <a href="#videos">Vídeos</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Sua grana, <span class="underline">sem mistério.</span></h1>
+      <p>Dicas diretas sobre dinheiro, sem economês e sem enrolação — pra você organizar a vida financeira no seu ritmo.</p>
+      <div class="tag-row">
+        <span class="pill">De jovem pra jovem</span>
+        <span class="pill">Direto ao ponto</span>
+        <span class="pill">Feito pra quem tá começando</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="dicas">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="mark-dot"></span>
+        <h2>Dicas rápidas</h2>
+      </div>
+      <p class="section-sub">Clique em cada uma pra abrir. Nada de textão — só o essencial.</p>
+
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span class="num">01</span>
+            Anote pra onde vai seu dinheiro
+            <span class="plus"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-panel-inner">
+            <p>Antes de guardar ou investir, entenda pra onde a grana já está indo. Um mês anotando gastos costuma mostrar mais coisa do que qualquer planilha pronta.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span class="num">02</span>
+            Monte uma reserva antes de gastar o resto
+            <span class="plus"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-panel-inner">
+            <p>Separe uma parte assim que o dinheiro cair, mesmo que pouco. Reserva de emergência não é sobre valor alto, é sobre criar o hábito primeiro.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span class="num">03</span>
+            Cartão de crédito não é dinheiro extra
+            <span class="plus"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-panel-inner">
+            <p>Ele só antecipa o que você já teria que pagar. Usar bem é gastar o que cabe no seu orçamento normal — e pagar a fatura inteira, sempre.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span class="num">04</span>
+            Comece a investir com o que sobrar
+            <span class="plus"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-panel-inner">
+            <p>Não precisa esperar juntar um valor "digno". O que importa no início é criar o hábito de investir todo mês, mesmo que seja pouco.</p>
+          </div></div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" aria-expanded="false">
+            <span class="num">05</span>
+            Defina metas antes de guardar dinheiro
+            <span class="plus"></span>
+          </button>
+          <div class="acc-panel"><div class="acc-panel-inner">
+            <p>Guardar "porque tem que guardar" não dura. Ter um motivo — viagem, curso, independência — deixa mais fácil manter o hábito.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="conteudos">
+    <div class="wrap">
+      <div class="content-grid">
+
+        <div class="content-col" id="ebook">
+          <div class="section-head">
+            <span class="mark-dot"></span>
+            <h2>E-book</h2>
+          </div>
+          <p class="section-sub" id="ebookHint">Passe o mouse pra abrir o livro. Clique pra baixar.</p>
+
+          <div class="book-wrap">
+            <div class="book" id="bookEl" tabindex="0" aria-label="E-book Primeiros Passos com o Dinheiro — passe o mouse pra abrir">
+              <div class="book-pages">
+                <div class="page page-left">
+                  <span class="modal-eyebrow">E-book · Descomplica</span>
+                  <h3>Primeiros Passos com o Dinheiro</h3>
+                  <p class="lead">Um guia introdutório pra organizar as contas, entender pra onde vai o dinheiro e dar os primeiros passos pra guardar e investir.</p>
+                </div>
+                <div class="page page-right">
+                  <div class="list-title">O que você vai encontrar</div>
+                  <ul>
+                    <li>Como organizar as contas sem planilha complicada</li>
+                    <li>Passo a passo pra montar sua primeira reserva</li>
+                    <li>Primeiros passos pra investir</li>
+                    <li>Erros comuns de quem tá começando</li>
+                  </ul>
+                  <div class="download-row">
+                    <button class="download-btn" id="downloadBtn" type="button">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>
+                      Baixar em PDF
+                    </button>
+                    <span class="download-hint" id="downloadHint">Grátis · modelo de exemplo</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="book-cover" id="bookCover">
+                <span class="cover-text">Primeiros Passos com o Dinheiro</span>
+                <span class="cover-badge">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>
+                </span>
+                <svg class="rings" viewBox="0 0 100 100" aria-hidden="true">
+                  <circle cx="38" cy="50" r="24" fill="none" stroke="#ffffff" stroke-width="7" opacity="0.35"/>
+                  <circle cx="62" cy="50" r="24" fill="none" stroke="#ffffff" stroke-width="7" opacity="0.55"/>
+                </svg>
+                <span class="cover-foot">DESCOMPLICA · E-BOOK</span>
+                <span class="cover-cta">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V6a2 2 0 0 1 2-2h13v15"/><path d="M6 19a2 2 0 1 0 0 4h13v-4"/></svg>
+                  Passe o mouse pra abrir
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-col" id="videos">
+          <div class="section-head">
+            <span class="mark-dot"></span>
+            <h2>Vídeos</h2>
+          </div>
+          <p class="section-sub">Uma seleção pra assistir com calma.</p>
+
+          <div class="video-grid">
+            <article class="vid-block">
+              <div class="vid-thumb" style="background:linear-gradient(140deg,#1c2740,#2b3a5a)">
+                <div class="play"><svg viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="12" fill="rgba(255,255,255,0.18)"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+                <span class="dur">9:12</span>
+              </div>
+              <div class="vid-meta">
+                <h4>Como sair das dívidas sem desespero</h4>
+                <span>Canal Exemplo</span>
+              </div>
+            </article>
+
+            <article class="vid-block">
+              <div class="vid-thumb" style="background:linear-gradient(140deg,#22a066,#2ebd79)">
+                <div class="play"><svg viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="12" fill="rgba(255,255,255,0.18)"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+                <span class="dur">6:40</span>
+              </div>
+              <div class="vid-meta">
+                <h4>Investindo com R$ 50 por mês</h4>
+                <span>Canal Exemplo</span>
+              </div>
+            </article>
+
+            <article class="vid-block">
+              <div class="vid-thumb" style="background:linear-gradient(140deg,#445580,#2b3a5a)">
+                <div class="play"><svg viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="12" fill="rgba(255,255,255,0.18)"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+                <span class="dur">11:05</span>
+              </div>
+              <div class="vid-meta">
+                <h4>Cartão de crédito: vilão ou aliado?</h4>
+                <span>Canal Exemplo</span>
+              </div>
+            </article>
+
+            <article class="vid-block">
+              <div class="vid-thumb" style="background:linear-gradient(140deg,#2ebd79,#1c2740)">
+                <div class="play"><svg viewBox="0 0 24 24" fill="#fff"><circle cx="12" cy="12" r="12" fill="rgba(255,255,255,0.18)"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+                <span class="dur">8:27</span>
+              </div>
+              <div class="vid-meta">
+                <h4>Reserva de emergência do zero</h4>
+                <span>Canal Exemplo</span>
+              </div>
+            </article>
+          </div>
+          <p class="videos-note">Prévia de layout — ainda não clicáveis</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="38" cy="50" r="26" fill="none" stroke="var(--navy-900)" stroke-width="11"/>
+        <circle cx="62" cy="50" r="26" fill="none" stroke="var(--navy-900)" stroke-width="11"/>
+        <path d="M 62 76 C 76 76 84 68 86 58 L 100 58" fill="none" stroke="var(--green-500)" stroke-width="9" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-type">
+        <strong>Descomplica</strong>
+        <span>FINANÇAS PARA JOVENS</span>
+      </div>
+    </div>
+    <p>Modelo de página — conteúdo de exemplo, pronto pra ser substituído.</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.acc-trigger').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.closest('.acc-item');
+      var isOpen = item.classList.contains('open');
+      item.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  });
+
+  var book = document.getElementById('bookEl');
+  var downloadBtn = document.getElementById('downloadBtn');
+  var downloadHint = document.getElementById('downloadHint');
+  var ebookHint = document.getElementById('ebookHint');
+  var supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  function triggerDownload() {
+    downloadHint.textContent = 'PDF ainda não anexado — é só plugar o arquivo final aqui';
+  }
+
+  downloadBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    triggerDownload();
+  });
+
+  if (supportsHover) {
+    // no hover, o livro já abre sozinho (CSS). Qualquer clique nele = baixar.
+    book.addEventListener('click', function (e) {
+      if (e.target.closest('#downloadBtn')) return;
+      triggerDownload();
+    });
+  } else {
+    // sem hover (toque): primeiro toque abre, segundo fecha.
+    // o botão de baixar continua funcionando normalmente, sem fechar o livro.
+    ebookHint.textContent = 'Toque pra abrir o livro. Toque no botão verde pra baixar.';
+    book.addEventListener('click', function (e) {
+      if (e.target.closest('#downloadBtn')) return;
+      book.classList.toggle('open');
+    });
+  }
+</script>
+
+</body>
+</html>
